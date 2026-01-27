@@ -17,7 +17,7 @@ teardown() {
 @test 'transform_last output nothing for empty input' {
   # NOTE: printf does not issue an end of line, that is the natural delimiter
   # of stream
-  run bats_pipe printf '' \| \
+  run --keep-empty-lines bats_pipe printf '' \| \
     transform_last to_foo
 
   assert_output ''
@@ -80,16 +80,16 @@ ghixyz  qwe'
 }
 
 @test 'transform_last takes also white spaces line only into account' {
-  # NOTE: first line is composed of 2 white spaces, second one, only end of
-  # line
-  run bats_pipe echo '  
+  # NOTE: first line is composed of 2 white spaces (transformed), second one,
+  # only end of line (ignored)
+  run --keep-empty-lines bats_pipe echo '  
 
 bar' \| \
     transform_last to_foo
 
   assert_output 'foo
 foo
-foo'
+'
 }
 
 @test 'transform_last does not change the size of input stream wichever it outputs or not' {

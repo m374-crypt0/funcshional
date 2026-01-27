@@ -39,13 +39,14 @@ teardown() {
 }
 
 @test 'take succeeds at returning first elements of a stream' {
+  # NOTE: It ignores empty input
   run --keep-empty-lines \
     bats_pipe echo '1
 2
 
 3' \| take 3
 
-  assert_output $'1\n2\n\n'
+  assert_output $'1\n2\n3\n'
 }
 
 @test 'skip fails without an argument' {
@@ -73,6 +74,7 @@ teardown() {
 }
 
 @test 'skip succeeds at returning last elements of a stream' {
+  # NOTE: it ignores empty elements
   run --keep-empty-lines \
     bats_pipe echo '1
 2
@@ -81,7 +83,7 @@ teardown() {
 4
 5' \| skip 3
 
-  assert_output $'3\n4\n5\n'
+  assert_output $'4\n5\n'
 }
 
 @test 'prepend succeeds at prepending anything at the top of the stream' {

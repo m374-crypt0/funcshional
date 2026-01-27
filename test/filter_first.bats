@@ -24,24 +24,24 @@ c' \| \
   assert_equal $status 1
 }
 
-@test 'filter_first works for argument-less predicate filtering non empty input' {
-  run bats_pipe echo 'a
-b
+@test 'filter_first works for argument-less predicate for empty stream' {
+  run bats_pipe echo '
 
-c' \| \
-    filter_first non_empty
 
-  assert_output $'a\nb\nc'
+' \| \
+    filter_first only_letter
+
+  assert_output ''
 }
 
-@test 'filter_first works for argument-less predicate filtering empty input' {
+@test 'filter_first works for argument-less predicate filtering non empty input' {
   run --keep-empty-lines bats_pipe echo 'a
 b
 
 c' \| \
-    filter_first only_empty
+    filter_first only_letter
 
-  assert_output $'\n'
+  assert_output $'a\nb\nc\n'
 }
 
 @test 'filter_first works for predicate with arguments' {

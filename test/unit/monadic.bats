@@ -63,7 +63,7 @@ teardown() {
   run bats_pipe lift echo hello \| \
     unlift echo world
 
-  # assert_equal $status 0
+  assert_equal $status 0
   assert_output 'hello
 world'
 }

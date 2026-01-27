@@ -39,17 +39,17 @@ skip() {
     n=$((n - 1))
   done
 
-  sink_
+  sink
 }
 
 prepend() {
   echo "$@"
 
-  sink_
+  sink
 }
 
 append() {
-  sink_
+  sink
 
   echo "$@"
 }

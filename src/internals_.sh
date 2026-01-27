@@ -21,10 +21,6 @@ id_() {
   echo "$@"
 }
 
-sink_() {
-  transform_first id_
-}
-
 append_to_() {
   local stream &&
     stream="$1"

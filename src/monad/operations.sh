@@ -2,28 +2,53 @@
 
 set -o pipefail
 
-# shellcheck source=../internals_.sh
-. "${FUNCSHIONAL_ROOT_DIR}"src/internals_.sh
+# shellcheck source=../hof/transform.sh
+. "${FUNCSHIONAL_ROOT_DIR}"src/hof/transform.sh
 
 # shellcheck source=../error_codes.sh
 . "${FUNCSHIONAL_ROOT_DIR}"src/error_codes.sh
 
-m_start() {
-  if [ -z "$*" ]; then
-    return $FUNCSHIONAL_MONAD_START_MISSING_OPERATION
+lift() {
+  if [ $# -eq 0 ]; then
+    return $FUNCSHIONAL_MONAD_LIFT_MISSING_OPERATION
   fi
+
+  echo m_start called
 
   eval "$*"
 }
 
-m_then() {
-  return $FUNCSHIONAL_MONAD_INVALID_THEN_CALL
+unlift() {
+  read -t 0.1 -r ||
+    return $FUNCSHIONAL_MONAD_INVALID_UNLIFT_CALL
+
+  sink
 }
 
-m_catch() {
-  return $FUNCSHIONAL_MONAD_INVALID_CATCH_CALL
+and_then() {
+  read -t 0.1 -r ||
+    return $FUNCSHIONAL_MONAD_INVALID_AND_THEN_CALL
+
+  if [ $# -eq 0 ]; then
+    return $FUNCSHIONAL_MONAD_AND_THEN_MISSING_OPERATION
+  fi
+
+  echo m_start called
+
+  sink
+
+  eval "$*"
 }
 
-m_end() {
-  return $FUNCSHIONAL_MONAD_INVALID_END_CALL
+or_else() {
+  read -t 0.1 -r ||
+    return $FUNCSHIONAL_MONAD_INVALID_OR_ELSE_CALL
+
+  if [ $# -eq 0 ]; then
+    return $FUNCSHIONAL_MONAD_OR_ELSE_MISSING_OPERATION
+  fi
+
+  echo m_start called
+
+  sink
 }

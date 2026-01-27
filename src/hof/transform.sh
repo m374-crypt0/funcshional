@@ -53,3 +53,7 @@ transform_last() {
     fi
   done
 }
+
+sink() {
+  transform_first id_
+}

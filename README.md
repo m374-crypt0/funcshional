@@ -60,15 +60,15 @@ Monadic operations are at hands with simple but powerful construct:
 
 ```bash
 monopole_mine() {
-  m_start mine_raw_ore |
-    m_then filter_first only_gold |
-    m_then any |
-    m_catch report_and_stop 'no gold ore!' |
-    m_then transform_first melt_gold_ore 1 cart |
-    m_then fold_first make_gold_ingots 1 kg |
-    m_then any |
-    m_catch report_and_stop 'not enough molten gold for an ingot' |
-    m_end sell_gold_ingots
+  lift mine_raw_ore |
+    and_then filter_first only_gold |
+    and_then any |
+    or_else report_and_stop 'no gold ore!' |
+    and_then transform_first melt_gold_ore 1 cart |
+    and_then fold_first make_gold_ingots 1 kg |
+    and_then any |
+    or_else report_and_stop 'not enough molten gold for an ingot' |
+    unlift sell_gold_ingots
 }
 ```
 
@@ -77,15 +77,17 @@ ore and eventually, you could sell gold ingots, quite cool right?
 
 Few things:
 
-- start monadic operation block with `m_start` (monad start) and an operation
-  that is able to output things
-- chain operation on success with `m_then` (monad then) and the next operation
-  taking the previous operation result as input
-- handle any fail with `m_catch` (monad catch). It allows you to customize the
-  behavior in case of failure, even discard any error should you need to do
-  that.
-- finish the monadic operation block with `m_end` (monad end) the last
-  operation (here `sell_gold_ingots`)
+- start monadic operation block with `lift` and an operation that is able to
+  output things. Lifting consists in somehow `encapsulate` a computation into a
+  monadic context
+- chain operation on success with `and_then` and the next operation taking the
+  previous operation result as input. It works only for a previously lifted
+  value
+- handle any fail with `or_else`. It allows you to customize the behavior in
+  case of failure, even discard any error should you need to do that.
+- finish the monadic operation block with `unlift` the last operation (here
+  `sell_gold_ingots`). It somehow `decapsulate` all the executed computation to
+  get the final value obtained after the monadic chain execution.
 
 You now have the power to write self explanatory code easy to read and
 understand.

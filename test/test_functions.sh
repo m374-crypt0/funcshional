@@ -89,3 +89,13 @@ only_letter() {
 echo_args() {
   echo "$*"
 }
+
+report_failure() {
+  echo failed
+
+  return 1
+}
+
+report_success() {
+  echo succeeded
+}

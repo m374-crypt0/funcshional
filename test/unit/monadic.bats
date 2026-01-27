@@ -15,38 +15,74 @@ teardown() {
 }
 
 # bats file_tags=bats:focus
-@test 'monadic chain start fails if no operation is passed as argument' {
-  run m_start
+@test 'lift fails if no operation is passed as argument' {
+  run lift
 
-  assert_equal $status "$FUNCSHIONAL_MONAD_START_MISSING_OPERATION"
+  assert_equal $status "$FUNCSHIONAL_MONAD_LIFT_MISSING_OPERATION"
 }
 
-@test 'monadic chain start accept command as argument and execute it' {
-  run m_start echo hello
+@test 'lift accepts command as argument executes it and lifts its output' {
+  run bats_pipe lift echo hello \| \
+    unlift
 
+  assert_equal $status 0
   assert_output hello
 }
 
-@test 'monadic chain start accept function call as argument and execute it' {
-  run m_start echo_args hello world
+@test 'lift accepts function call as argument executes it and lifts its output' {
+  run bats_pipe lift echo_args hello world \| \
+    unlift
 
   assert_output 'hello world'
 }
 
-@test 'monadic chain then cannot be called before a monadic chain start' {
-  run m_then
+@test 'lift succeeds command execution for and_then further processing' {
+  run bats_pipe lift report_success \| \
+    and_then echo that is good \| \
+    unlift
 
-  assert_equal $status "$FUNCSHIONAL_MONAD_INVALID_THEN_CALL"
+  assert_equal $status 0
+  assert_output 'succeeded
+that is good'
 }
 
-@test 'monadic chain catch cannot be called before a monadic chain start' {
-  run m_catch
+@test 'lift succeeds command execution, or_else calls are ignored' {
+  run bats_pipe lift report_success \| \
+    or_else echo that is wrong \| \
+    unlift
 
-  assert_equal $status "$FUNCSHIONAL_MONAD_INVALID_CATCH_CALL"
+  assert_equal $status 0
+  assert_output succeeded
 }
 
-@test 'monadic chain end cannot be called before a monadic chain start' {
-  run m_end
+@test 'and_then cannot be called before a lift' {
+  run and_then
 
-  assert_equal $status "$FUNCSHIONAL_MONAD_INVALID_END_CALL"
+  assert_equal $status "$FUNCSHIONAL_MONAD_INVALID_AND_THEN_CALL"
+}
+
+@test 'and_then cannot be called without an operation' {
+  run bats_pipe lift true \| \
+    and_then
+
+  assert_equal $status "$FUNCSHIONAL_MONAD_AND_THEN_MISSING_OPERATION"
+}
+
+@test 'or_else cannot be called before a lift' {
+  run or_else
+
+  assert_equal $status "$FUNCSHIONAL_MONAD_INVALID_OR_ELSE_CALL"
+}
+
+@test 'or_else cannot be called without an operation' {
+  run bats_pipe lift true \| \
+    or_else
+
+  assert_equal $status "$FUNCSHIONAL_MONAD_OR_ELSE_MISSING_OPERATION"
+}
+
+@test 'unlift cannot be called before a lift' {
+  run unlift
+
+  assert_equal $status "$FUNCSHIONAL_MONAD_INVALID_UNLIFT_CALL"
 }

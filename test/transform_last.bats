@@ -1,5 +1,3 @@
-set -o pipefail
-
 setup() {
   load "${ROOT_DIR}test/test_helper/bats-support/load"
   load "${ROOT_DIR}test/test_helper/bats-assert/load"

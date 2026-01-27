@@ -43,3 +43,7 @@ transform_last() {
     fi
   done
 }
+
+fold_first() {
+  return 1
+}

@@ -120,3 +120,31 @@ take() {
     fi
   done
 }
+
+id() {
+  echo "$@"
+}
+
+sink() {
+  transform_first id
+}
+
+skip() {
+  local n &&
+    n="$1"
+
+  if ! ((n + 0)); then
+    return 1
+  fi
+
+  if [ "$n" -lt 0 ]; then
+    return 1
+  fi
+
+  while [ "$n" -gt 0 ]; do
+    n=$((n - 1))
+    read -r
+  done
+
+  sink
+}

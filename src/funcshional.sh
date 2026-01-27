@@ -214,3 +214,41 @@ filter_last() {
     fi
   done
 }
+
+partition_first() {
+  local f="$1"
+  local f_type &&
+    f_type="$(type -t "$f")"
+
+  if [ "$f_type" != 'function' ]; then
+    return 1
+  fi
+
+  local partition_top
+  local partition_bottom
+  local top_size &&
+    top_size=0
+  local line
+
+  while IFS= read -r line; do
+    if "$f" "$line"; then
+      # TODO: refactor appending everywhere
+      if [ -z "$partition_top" ]; then
+        partition_top="$line"
+      else
+        partition_top="$partition_top"$'\n'"$line"
+      fi
+      top_size=$((top_size + 1))
+    else
+      if [ -z "$partition_bottom" ]; then
+        partition_bottom="$line"
+      else
+        partition_bottom="$partition_bottom"$'\n'"$line"
+      fi
+    fi
+  done
+
+  if [ "$top_size" -gt 0 ]; then
+    echo "$top_size"$'\n'"$partition_top"$'\n'"$partition_bottom"
+  fi
+}

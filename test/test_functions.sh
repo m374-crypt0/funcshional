@@ -61,3 +61,9 @@ failing_transformer() {
 silent_transformer() {
   :
 }
+
+wrong_outputing_transformer() {
+  # NOTE: wrong because outputing 2 lines for 1 input stream item
+  echo foo
+  echo bar
+}

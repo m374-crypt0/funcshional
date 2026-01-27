@@ -20,6 +20,8 @@ transform_first() {
     local r &&
       r="$("$f" "$line" "${args_array[@]}")" ||
       return 1 &&
+      [ "$(wc -l <<<"$r")" -eq 1 ] ||
+      return 1 &&
       echo "$r"
   done
 }
@@ -41,6 +43,8 @@ transform_last() {
   while IFS= read -r line; do
     local r &&
       r="$("$f" "${args_array[@]}" "$line")" ||
+      return 1 &&
+      [ "$(wc -l <<<"$r")" -eq 1 ] ||
       return 1 &&
       echo "$r"
   done

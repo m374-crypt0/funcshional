@@ -99,3 +99,12 @@ def' \| \
 
   assert_output $'\n\n'
 }
+
+# TODO: more explicit error codes
+@test 'transform_first cannot change the size of input stream by outputing more than one line' {
+  run bats_pipe echo 'abc
+def' \| \
+    transform_first wrong_outputing_transformer
+
+  assert_equal $status 1
+}

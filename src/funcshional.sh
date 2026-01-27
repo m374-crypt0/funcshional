@@ -17,8 +17,10 @@ transform_first() {
 
   local line
   while IFS= read -r line; do
-    "$f" "$line" "${args_array[@]}" ||
-      return 1
+    local r &&
+      r="$("$f" "$line" "${args_array[@]}")" ||
+      return 1 &&
+      echo "$r"
   done
 }
 
@@ -37,8 +39,10 @@ transform_last() {
 
   local line
   while IFS= read -r line; do
-    "$f" "${args_array[@]}" "$line" ||
-      return 1
+    local r &&
+      r="$("$f" "${args_array[@]}" "$line")" ||
+      return 1 &&
+      echo "$r"
   done
 }
 

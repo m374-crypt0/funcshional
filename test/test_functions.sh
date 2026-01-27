@@ -57,3 +57,7 @@ failing_accumulator() {
 failing_transformer() {
   return 1
 }
+
+silent_transformer() {
+  :
+}

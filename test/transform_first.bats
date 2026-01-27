@@ -1,3 +1,7 @@
+setup_file() {
+  bats_require_minimum_version 1.5.0
+}
+
 setup() {
   load "${ROOT_DIR}test/test_helper/bats-support/load"
   load "${ROOT_DIR}test/test_helper/bats-assert/load"
@@ -86,4 +90,12 @@ bar' \| \
   assert_output 'foo
 foo
 foo'
+}
+
+@test 'transform_first does not change the size of input stream wichever it outputs or not' {
+  run --keep-empty-lines bats_pipe echo 'abc
+def' \| \
+    transform_first silent_transformer
+
+  assert_output $'\n\n'
 }

@@ -29,12 +29,10 @@ append_to_() {
     line="$2"
 
   if [ -z "$stream" ]; then
-    stream="$line"
+    echo "$line"
   else
-    stream="$stream"$'\n'"$line"
+    echo "$stream"$'\n'"$line"
   fi
-
-  echo "$stream"
 }
 
 is_positive_integer_() {

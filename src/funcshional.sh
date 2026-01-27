@@ -150,8 +150,8 @@ skip() {
   fi
 
   while [ "$n" -gt 0 ]; do
-    n=$((n - 1))
     read -r
+    n=$((n - 1))
   done
 
   sink

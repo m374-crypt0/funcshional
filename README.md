@@ -64,8 +64,8 @@ monopole_mine() {
     m_then filter_first only_gold |
     m_then any |
     m_catch report_and_stop 'no gold ore!' |
-    m_then transform_first melt_gold_ore |
-    m_then fold_first make_gold_ingots |
+    m_then transform_first melt_gold_ore 1 cart |
+    m_then fold_first make_gold_ingots 1 kg |
     m_then any |
     m_catch report_and_stop 'not enough molten gold for an ingot' |
     m_end sell_gold_ingots

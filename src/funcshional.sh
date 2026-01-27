@@ -16,7 +16,7 @@ transform_first() {
     args_array=("$@")
 
   local line
-  while read -r line; do
+  while IFS= read -r line; do
     if [ -n "$line" ]; then
       "$f" "$line" "${args_array[@]}"
     fi
@@ -37,7 +37,7 @@ transform_last() {
     args_array=("$@")
 
   local line
-  while read -r line; do
+  while IFS= read -r line; do
     if [ -n "$line" ]; then
       "$f" "${args_array[@]}" "$line"
     fi

@@ -67,3 +67,13 @@ ghi' \| \
 defxyz  qwe
 ghixyz  qwe'
 }
+
+@test 'transform_last takes white spaces line only into account' {
+  run bats_pipe echo '  
+
+bar' \| \
+    transform_last to_foo
+
+  assert_output 'foo
+foo'
+}

@@ -25,17 +25,23 @@ lift() {
 }
 
 unlift() {
+  if [ $# -eq 0 ]; then
+    return $FUNCSHIONAL_MONAD_UNLIFT_MISSING_OPERATION
+  fi
+
   local monad_ret_decl &&
     read -t 0.1 -r monad_ret_decl ||
     return $FUNCSHIONAL_MONAD_INVALID_UNLIFT_CALL
 
   # NOTE: monad_ret variable is evaluated here, unlifting process
-  eval "$monad_ret_decl"
+  # shellcheck disable=SC2154
+  eval "$monad_ret_decl" &&
+    is_positive_integer_ "$monad_ret" ||
+    return $FUNCSHIONAL_MONAD_INVALID_UNLIFT_CALL
 
   sink
 
-  # shellcheck disable=SC2154
-  return "$monad_ret"
+  eval "$*"
 }
 
 and_then() {

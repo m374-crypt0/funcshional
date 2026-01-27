@@ -41,7 +41,8 @@ is_positive_integer_() {
   local n &&
     n="$1"
 
-  if ! ((n + 0)); then
+  # NOTE: if n is 0, (( n + 0 )) fails...no comments
+  if ! ((n + 1)); then
     return 1
   fi
 

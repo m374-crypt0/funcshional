@@ -60,10 +60,14 @@ fold_first() {
   local accumulated &&
     accumulated="$2"
 
+  shift 2
+  local args_array &&
+    args_array=("$@")
+
   local line
   while IFS= read -r line; do
     if [ -n "$line" ]; then
-      accumulated="$("$f" "$line" "$accumulated")"
+      accumulated="$("$f" "$line" "$accumulated" "${args_array[@]}")"
     fi
   done
 

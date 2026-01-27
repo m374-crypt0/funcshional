@@ -39,3 +39,12 @@ def' \| \
 
   assert_output 'abc def'
 }
+
+@test 'fold_first succeeds with accumulator functions with arguments' {
+  run bats_pipe echo 'abc
+
+def' \| \
+    fold_first as_decorated_string '' '<< ' ' >>'
+
+  assert_output '<< abc >> << def >>'
+}

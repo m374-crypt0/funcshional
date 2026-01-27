@@ -21,3 +21,17 @@ as_string() {
     echo "$2 $1"
   fi
 }
+
+as_decorated_string() {
+  local prefix &&
+    prefix="$3"
+
+  local suffix &&
+    suffix="$4"
+
+  if [ -z "$2" ]; then
+    echo "$prefix$1$suffix"
+  else
+    echo "$2 $prefix$1$suffix"
+  fi
+}

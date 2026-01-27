@@ -37,10 +37,10 @@ world() {
 }
 
 hello |
-push_back ' ' |
-push_back world |
-push_back '!' |
-fold concat
+append ' ' |
+append world |
+append '!' |
+fold_first concat
 
 # it will output the preferred sentence of programmers: hello world!
 
@@ -61,11 +61,11 @@ Monadic operations are at hands with simple but powerful construct:
 ```bash
 monopole_mine() {
   m_start mine_raw_ore |
-    m_then filter only_gold |
+    m_then filter_first only_gold |
     m_then any |
     m_catch report_and_stop 'no gold ore!' |
-    m_then transform melt_gold_ore |
-    m_then fold make_gold_ingots |
+    m_then transform_first melt_gold_ore |
+    m_then fold_first make_gold_ingots |
     m_then any |
     m_catch report_and_stop 'not enough molten gold for an ingot' |
     m_end sell_gold_ingots
@@ -90,7 +90,11 @@ Few things:
 You now have the power to write self explanatory code easy to read and
 understand.
 
-## reference
+## how to use
+
+### fundamentals
+
+### reference
 
 ==TODO==
 

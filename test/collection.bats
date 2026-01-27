@@ -83,3 +83,17 @@ teardown() {
 
   assert_output $'3\n4\n5\n'
 }
+
+@test 'can prepend anything at the top of the stream' {
+  run bats_pipe echo 'b
+c' \| \
+    prepend '0
+
+a'
+
+  assert_output '0
+
+a
+b
+c'
+}

@@ -156,3 +156,9 @@ skip() {
 
   sink
 }
+
+prepend() {
+  echo "$@"
+
+  sink
+}

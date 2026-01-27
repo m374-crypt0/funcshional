@@ -13,7 +13,7 @@ transform_first() {
 
   shift
   local args_array &&
-    read -ra args_array <<<"$@"
+    args_array=("$@")
 
   local line
   while read -r line; do
@@ -34,7 +34,7 @@ transform_last() {
 
   shift
   local args_array &&
-    read -ra args_array <<<"$@"
+    args_array=("$@")
 
   local line
   while read -r line; do

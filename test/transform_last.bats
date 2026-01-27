@@ -50,9 +50,20 @@ ghi' \| \
   run bats_pipe echo 'abc
 def
 ghi' \| \
-    transform_last t_last_append xyz qwe
+    transform_last t_last_append xyz '' qwe
 
   assert_output 'abcxyzqwe
 defxyzqwe
 ghixyzqwe'
+}
+
+@test 'transform_last succeeds at using a transformer whose last arg is stream item and white spaces' {
+  run bats_pipe echo 'abc
+def
+ghi' \| \
+    transform_last t_last_append xyz '  ' qwe
+
+  assert_output 'abcxyz  qwe
+defxyz  qwe
+ghixyz  qwe'
 }

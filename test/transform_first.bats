@@ -56,3 +56,14 @@ ghi' \| \
 defxyzqwe
 ghixyzqwe'
 }
+
+@test 'transform_first succeeds at using a transformer whose first arg is stream item and white spaces' {
+  run bats_pipe echo 'abc
+def
+ghi' \| \
+    transform_first t_first_append xyz '  ' qwe
+
+  assert_output 'abcxyz  qwe
+defxyz  qwe
+ghixyz  qwe'
+}

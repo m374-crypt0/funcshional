@@ -65,6 +65,7 @@ teardown() {
   run bats_pipe lift echo_args hello world \| \
     unlift
 
+  assert_equal $status 0
   assert_output 'hello world'
 }
 
@@ -112,4 +113,16 @@ failed'
   assert_not_equal $status 0
   assert_output 'failed
 failed'
+}
+
+@test 'or_else can break error chain for further processing by and_then' {
+  run bats_pipe lift report_failure \| \
+    or_else echo succeeding command after a fail \| \
+    and_then report_success \| \
+    unlift
+
+  assert_equal $status 0
+  assert_output 'failed
+succeeding command after a fail
+succeeded'
 }

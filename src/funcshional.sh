@@ -2,4 +2,6 @@
 
 set -o pipefail
 
-echo hello!
+transform_first() {
+  :;
+}

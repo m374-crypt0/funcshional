@@ -2,6 +2,7 @@
 
 set -o pipefail
 
+# TODO: take into account empy elements
 transform_first() {
   local f="$1"
   local f_type &&
@@ -102,4 +103,26 @@ fold_last() {
   done
 
   echo "$accumulated"
+}
+
+# TODO: refacto as fold
+take() {
+  local n &&
+    n="$1"
+
+  if ! ((n + 0)); then
+    return 1
+  fi
+
+  if [ "$n" -lt 0 ]; then
+    return 1
+  fi
+
+  local line
+  while IFS= read -r line; do
+    if [ "$n" -gt 0 ]; then
+      echo "$line"
+      n=$((n - 1))
+    fi
+  done
 }

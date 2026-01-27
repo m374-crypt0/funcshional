@@ -24,9 +24,6 @@ lift() {
 }
 
 unlift() {
-  [ $# -eq 0 ] &&
-    return $FUNCSHIONAL_MONAD_UNLIFT_MISSING_OPERATION
-
   local monad_ret_decl &&
     read -t 1 -r monad_ret_decl ||
     return $FUNCSHIONAL_MONAD_INVALID_UNLIFT_CALL
@@ -39,7 +36,7 @@ unlift() {
 
   sink
 
-  eval "$*"
+  return "$monad_ret"
 }
 
 and_then() {

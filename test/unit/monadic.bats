@@ -21,16 +21,9 @@ teardown() {
 }
 
 @test 'unlift cannot be called before a lift' {
-  run unlift echo hey
+  run unlift
 
   assert_equal $status "$FUNCSHIONAL_MONAD_INVALID_UNLIFT_CALL"
-}
-
-@test 'unlift fails if no operation is passed as argument' {
-  run bats_pipe lift echo hey \| \
-    unlift
-
-  assert_equal $status "$FUNCSHIONAL_MONAD_UNLIFT_MISSING_OPERATION"
 }
 
 @test 'and_then cannot be called before a lift' {
@@ -61,44 +54,40 @@ teardown() {
 
 @test 'lift accepts command as argument executes it and lifts its output' {
   run bats_pipe lift echo hello \| \
-    unlift echo world
+    unlift
 
   assert_equal $status 0
-  assert_output 'hello
-world'
+  assert_output hello
 }
 
 @test 'lift accepts function call as argument executes it and lifts its output' {
   run bats_pipe lift echo_args hello world \| \
-    unlift echo '!'
+    unlift
 
   assert_equal $status 0
-  assert_output 'hello world
-!'
+  assert_output 'hello world'
 }
 
 @test 'failed command in and_then propagates error in unlift' {
   run bats_pipe lift report_success \| \
     and_then report_failure \| \
-    unlift echo propagated error
+    unlift
 
   assert_not_equal $status 0
   assert_output 'succeeded
-failed
-propagated error'
+failed'
 }
 
 @test 'lift succeeds command execution for and_then further processing' {
   run bats_pipe lift report_success \| \
     and_then echo that is good \| \
     and_then echo that is so cool \| \
-    unlift echo successful ending
+    unlift
 
   assert_equal $status 0
   assert_output 'succeeded
 that is good
-that is so cool
-successful ending'
+that is so cool'
 }
 
 @test 'lift successful command execution, ignore or_else calls' {
@@ -106,23 +95,21 @@ successful ending'
     or_else report_failure \| \
     and_then echo_args or_else ignored \| \
     or_else report_failure \| \
-    unlift echo .
+    unlift
 
   assert_equal $status 0
   assert_output 'succeeded
-or_else ignored
-.'
+or_else ignored'
 }
 
 @test 'lift fails command execution for or_else further processing' {
   run bats_pipe lift report_failure \| \
     or_else report_failure \| \
-    unlift echo chain of failure
+    unlift
 
   assert_not_equal $status 0
   assert_output 'failed
-failed
-chain of failure'
+failed'
 }
 
 @test 'lift fails command execution, ignore and_then calls' {
@@ -130,23 +117,21 @@ chain of failure'
     and_then report_success \| \
     or_else report_failure \| \
     and_then report_success \| \
-    unlift echo chain of failure
+    unlift
 
   assert_not_equal $status 0
   assert_output 'failed
-failed
-chain of failure'
+failed'
 }
 
 @test 'or_else can break error chain for further processing by and_then' {
   run bats_pipe lift report_failure \| \
     or_else echo succeeding command after a fail \| \
     and_then report_success \| \
-    unlift echo chain of success
+    unlift
 
   assert_equal $status 0
   assert_output 'failed
 succeeding command after a fail
-succeeded
-chain of success'
+succeeded'
 }

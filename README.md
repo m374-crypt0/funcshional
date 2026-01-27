@@ -69,7 +69,8 @@ monopole_mine() {
     and_then fold_first make_gold_ingots 1 kg |
     and_then any |
     or_else report_and_stop 'not enough molten gold for an ingot' |
-    unlift sell_gold_ingots
+    and_then sell_gold_ingots |
+    unlift
 }
 ```
 
@@ -87,9 +88,9 @@ Few things:
 - handle any fail with `or_else`. It allows you to customize the behavior in
   case of failure, even discard any error should you need to do that (for
   instance, by providing a default value).
-- finish the monadic operation block with `unlift` and the last operation (here
-  `sell_gold_ingots`). It somehow `decapsulate` all the executed computations
-  to get the final value obtained after the monadic chain execution.
+- finish the monadic operation block with `unlift` . It somehow `decapsulate`
+  all the executed computations to get the final value obtained after the
+  monadic chain execution.
 
 You now have the power to write self explanatory code easy to read and
 understand.

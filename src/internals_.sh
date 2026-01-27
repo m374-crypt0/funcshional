@@ -21,20 +21,6 @@ id_() {
   echo "$@"
 }
 
-append_to_() {
-  local stream &&
-    stream="$1"
-
-  local line &&
-    line="$2"
-
-  if [ -z "$stream" ]; then
-    echo "$line"
-  else
-    echo "$stream"$'\n'"$line"
-  fi
-}
-
 is_positive_integer_() {
   local n &&
     n="$1"

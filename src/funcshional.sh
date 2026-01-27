@@ -20,5 +20,8 @@ set -o pipefail
 # shellcheck source=./utility/list.sh
 . "${FUNCSHIONAL_ROOT_DIR}"src/utility/list.sh
 
+# shellcheck source=./utility/stream.sh
+. "${FUNCSHIONAL_ROOT_DIR}"src/utility/stream.sh
+
 # shellcheck source=./monad/operations.sh
 . "${FUNCSHIONAL_ROOT_DIR}"src/monad/operations.sh

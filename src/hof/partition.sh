@@ -29,9 +29,9 @@ partition_first() {
       if "$f" "$line" "${args_array[@]}"; then
         top_size=$((top_size + 1))
 
-        top="$(append_to_ "$top" "$line")"
+        top="$(append_string_to_stream "$top" "$line")"
       else
-        bottom="$(append_to_ "$bottom" "$line")"
+        bottom="$(append_string_to_stream "$bottom" "$line")"
       fi
     fi
   done
@@ -66,9 +66,9 @@ partition_last() {
       if "$f" "${args_array[@]}" "$line"; then
         top_size=$((top_size + 1))
 
-        top="$(append_to_ "$top" "$line")"
+        top="$(append_string_to_stream "$top" "$line")"
       else
-        bottom="$(append_to_ "$bottom" "$line")"
+        bottom="$(append_string_to_stream "$bottom" "$line")"
       fi
     fi
   done

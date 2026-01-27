@@ -95,7 +95,7 @@ foo
 @test 'transform_last does not change the size of input stream wichever it outputs or not' {
   run --keep-empty-lines bats_pipe echo 'abc
 def' \| \
-    transform_last silent_transformer
+    transform_last no_op_success
 
   assert_output $'\n\n'
 }

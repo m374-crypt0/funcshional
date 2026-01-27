@@ -50,17 +50,7 @@ as_decorated_string_last() {
   fi
 }
 
-# TODO: rename to no_op_fail
-failing_accumulator() {
-  return 1
-}
-
-failing_transformer() {
-  return 1
-}
-
-# TODO: rename to no_op_success
-silent_transformer() {
+no_op_success() {
   :
 }
 

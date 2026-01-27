@@ -95,7 +95,7 @@ foo
 @test 'transform_first cannot change the size of input stream wichever it outputs or not' {
   run --keep-empty-lines bats_pipe echo 'abc
 def' \| \
-    transform_first silent_transformer
+    transform_first no_op_success
 
   assert_output $'\n\n'
 }

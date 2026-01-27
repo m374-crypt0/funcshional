@@ -5,10 +5,10 @@ function run_tests() {
 
 run_tests
 
-while true; do
-  inotifywait -mqr \
-    --event modify \
-    "${ROOT_DIR}"test \
-    "${ROOT_DIR}"src |
-    run_tests
-done
+inotifywait -mqr \
+  --event modify \
+  "${ROOT_DIR}"test \
+  "${ROOT_DIR}"src |
+  while read -r; do
+    clear && run_tests
+  done

@@ -14,7 +14,6 @@ teardown() {
   :
 }
 
-# bats file_tags=bats:focus
 @test 'attempting to generate a stream without specifying a size fails' {
   run generate
 

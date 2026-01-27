@@ -37,10 +37,10 @@ world() {
 }
 
 hello |
-append ' ' |
-append world |
-append '!' |
-fold_first concat
+  append ' ' |
+  append world |
+  append '!' |
+  fold_first concat
 
 # it will output the preferred sentence of programmers: hello world!
 
@@ -92,6 +92,8 @@ understand.
 
 ## how to use
 
+Here is the thing about how to use `funcshional` correctly.
+
 ### fundamentals
 
 ### reference
@@ -103,6 +105,8 @@ understand.
 - sure you can, fork the repo, create a branch, make a PR, you know the drill!
 - Oh, do not forget to run and work with the test suite: `make test` is your
   friend here.
+- `make watch` is quite cool too to ensure tests are run for any file change
+  either in `src` or `test` directories
 
 ## TODO list
 

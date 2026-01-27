@@ -97,3 +97,13 @@ a
 b
 c'
 }
+
+@test 'prepend succeeds at preprending empty item at the top of the stream' {
+  run bats_pipe echo 'b
+c' \| \
+    prepend ''
+
+  assert_output '
+b
+c'
+}

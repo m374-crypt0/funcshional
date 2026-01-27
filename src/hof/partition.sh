@@ -2,10 +2,8 @@
 
 set -o pipefail
 
-# TODO: rename ROOT_DIR to FUNCSHIONAL_ROOT_DIR
-
 # shellcheck source=../internals_.sh
-. "${ROOT_DIR}"src/internals_.sh
+. "${FUNCSHIONAL_ROOT_DIR}"src/internals_.sh
 
 partition_first() {
   local f &&

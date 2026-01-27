@@ -3,7 +3,7 @@
 set -o pipefail
 
 # shellcheck source=../hof/transform.sh
-. "${ROOT_DIR}"src/hof/transform.sh
+. "${FUNCSHIONAL_ROOT_DIR}"src/hof/transform.sh
 
 take() {
   local n &&

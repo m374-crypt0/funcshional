@@ -2,10 +2,10 @@ MAKEFLAGS += --no-print-directory
 
 SHELL := /bin/bash
 
-ROOT_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+FUNCSHIONAL_ROOT_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 define source_script
-	. ${ROOT_DIR}make/$(1).sh
+	. ${FUNCSHIONAL_ROOT_DIR}make/$(1).sh
 endef
 
 export

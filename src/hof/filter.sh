@@ -3,7 +3,7 @@
 set -o pipefail
 
 # shellcheck source=../internals_.sh
-. "${ROOT_DIR}"src/internals_.sh
+. "${FUNCSHIONAL_ROOT_DIR}"src/internals_.sh
 
 filter_first() {
   local f &&

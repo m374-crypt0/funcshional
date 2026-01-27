@@ -24,3 +24,32 @@ id_() {
 sink_() {
   transform_first id_
 }
+
+append_to_() {
+  local stream &&
+    stream="$1"
+
+  local line &&
+    line="$2"
+
+  if [ -z "$stream" ]; then
+    stream="$line"
+  else
+    stream="$stream"$'\n'"$line"
+  fi
+
+  echo "$stream"
+}
+
+is_positive_integer_() {
+  local n &&
+    n="$1"
+
+  if ! ((n + 0)); then
+    return 1
+  fi
+
+  if [ "$n" -lt 0 ]; then
+    return 1
+  fi
+}

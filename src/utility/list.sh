@@ -7,15 +7,9 @@ set -o pipefail
 
 take() {
   local n &&
+    is_positive_integer_ "$1" ||
+    return 1 &&
     n="$1"
-
-  if ! ((n + 0)); then
-    return 1
-  fi
-
-  if [ "$n" -lt 0 ]; then
-    return 1
-  fi
 
   local line
   while IFS= read -r line; do
@@ -30,15 +24,9 @@ take() {
 
 skip() {
   local n &&
+    is_positive_integer_ "$1" ||
+    return 1 &&
     n="$1"
-
-  if ! ((n + 0)); then
-    return 1
-  fi
-
-  if [ "$n" -lt 0 ]; then
-    return 1
-  fi
 
   while [ "$n" -gt 0 ]; do
     discard_

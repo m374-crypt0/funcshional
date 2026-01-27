@@ -2,6 +2,8 @@
 
 set -o pipefail
 
+# TODO: rename ROOT_DIR to FUNCSHIONAL_ROOT_DIR
+
 # shellcheck source=../internals_.sh
 . "${ROOT_DIR}"src/internals_.sh
 
@@ -26,17 +28,9 @@ partition_first() {
       if "$f" "$line" "${args_array[@]}"; then
         top_size=$((top_size + 1))
 
-        if [ -z "$top" ]; then
-          top="$line"
-        else
-          top="$top"$'\n'"$line"
-        fi
+        top="$(append_to_ "$top" "$line")"
       else
-        if [ -z "$bottom" ]; then
-          bottom="$line"
-        else
-          bottom="$bottom"$'\n'"$line"
-        fi
+        bottom="$(append_to_ "$bottom" "$line")"
       fi
     fi
   done
@@ -71,17 +65,9 @@ partition_last() {
       if "$f" "${args_array[@]}" "$line"; then
         top_size=$((top_size + 1))
 
-        if [ -z "$top" ]; then
-          top="$line"
-        else
-          top="$top"$'\n'"$line"
-        fi
+        top="$(append_to_ "$top" "$line")"
       else
-        if [ -z "$bottom" ]; then
-          bottom="$line"
-        else
-          bottom="$bottom"$'\n'"$line"
-        fi
+        bottom="$(append_to_ "$bottom" "$line")"
       fi
     fi
   done

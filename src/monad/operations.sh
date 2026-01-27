@@ -13,42 +13,93 @@ lift() {
     return $FUNCSHIONAL_MONAD_LIFT_MISSING_OPERATION
   fi
 
-  echo m_start called
+  local output &&
+    local ret &&
+    output=$("$@")
 
-  eval "$*"
+  ret=$?
+
+  echo "local monad_ret && monad_ret=$ret"
+
+  echo "$output"
 }
 
 unlift() {
-  read -t 0.1 -r ||
+  local monad_ret_decl &&
+    read -t 0.1 -r monad_ret_decl ||
     return $FUNCSHIONAL_MONAD_INVALID_UNLIFT_CALL
 
+  # NOTE: monad_ret variable is evaluated here, unlifting process
+  eval "$monad_ret_decl"
+
   sink
+
+  # shellcheck disable=SC2154
+  return "$monad_ret"
 }
 
 and_then() {
-  read -t 0.1 -r ||
+  local monad_ret_decl &&
+    read -t 0.1 -r monad_ret_decl ||
     return $FUNCSHIONAL_MONAD_INVALID_AND_THEN_CALL
 
   if [ $# -eq 0 ]; then
     return $FUNCSHIONAL_MONAD_AND_THEN_MISSING_OPERATION
   fi
 
-  echo m_start called
+  # NOTE: monad_ret variable is evaluated here, unlifting process
+  eval "$monad_ret_decl"
+
+  if [ "$monad_ret" -ne 0 ]; then
+    echo "local monad_ret && monad_ret=$monad_ret"
+
+    sink
+
+    return "$monad_ret"
+  fi
+
+  local output &&
+    local ret &&
+    output=$("$@")
+  ret=$?
+
+  echo "local monad_ret && monad_ret=$ret"
 
   sink
 
-  eval "$*"
+  echo "$output"
 }
 
 or_else() {
-  read -t 0.1 -r ||
+  local monad_ret_decl &&
+    read -t 0.1 -r monad_ret_decl ||
     return $FUNCSHIONAL_MONAD_INVALID_OR_ELSE_CALL
 
   if [ $# -eq 0 ]; then
     return $FUNCSHIONAL_MONAD_OR_ELSE_MISSING_OPERATION
   fi
 
-  echo m_start called
+  # NOTE: monad_ret variable is evaluated here, unlifting process
+  eval "$monad_ret_decl"
+
+  if [ "$monad_ret" -eq 0 ]; then
+    echo "local monad_ret && monad_ret=$monad_ret"
+
+    sink
+
+    return "$monad_ret"
+  fi
+
+  local output &&
+    local ret &&
+    output=$("$@")
+  ret=$?
+
+  echo "local monad_ret && monad_ret=$ret"
 
   sink
+
+  echo "$output"
+
+  return $ret
 }

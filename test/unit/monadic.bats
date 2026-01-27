@@ -82,11 +82,34 @@ that is so cool'
 
 @test 'lift successful command execution, ignore or_else calls' {
   run bats_pipe lift report_success \| \
-    or_else echo that is wrong \| \
+    or_else report_failure \| \
     and_then echo_args or_else ignored \| \
+    or_else report_failure \| \
     unlift
 
   assert_equal $status 0
   assert_output 'succeeded
 or_else ignored'
+}
+
+@test 'lift fails command execution for or_else further processing' {
+  run bats_pipe lift report_failure \| \
+    or_else report_failure \| \
+    unlift
+
+  assert_not_equal $status 0
+  assert_output 'failed
+failed'
+}
+
+@test 'lift fails command execution, ignore and_then calls' {
+  run bats_pipe lift report_failure \| \
+    and_then report_success \| \
+    or_else report_failure \| \
+    and_then report_success \| \
+    unlift
+
+  assert_not_equal $status 0
+  assert_output 'failed
+failed'
 }

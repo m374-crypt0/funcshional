@@ -2,7 +2,6 @@
 
 set -o pipefail
 
-# TODO: take into account empy elements
 transform_first() {
   local f="$1"
   local f_type &&
@@ -18,9 +17,7 @@ transform_first() {
 
   local line
   while IFS= read -r line; do
-    if [ -n "$line" ]; then
-      "$f" "$line" "${args_array[@]}"
-    fi
+    "$f" "$line" "${args_array[@]}"
   done
 }
 
@@ -39,9 +36,7 @@ transform_last() {
 
   local line
   while IFS= read -r line; do
-    if [ -n "$line" ]; then
-      "$f" "${args_array[@]}" "$line"
-    fi
+    "$f" "${args_array[@]}" "$line"
   done
 }
 
@@ -67,9 +62,7 @@ fold_first() {
 
   local line
   while IFS= read -r line; do
-    if [ -n "$line" ]; then
-      accumulated="$("$f" "$line" "$accumulated" "${args_array[@]}")"
-    fi
+    accumulated="$("$f" "$line" "$accumulated" "${args_array[@]}")"
   done
 
   echo "$accumulated"
@@ -97,9 +90,7 @@ fold_last() {
 
   local line
   while IFS= read -r line; do
-    if [ -n "$line" ]; then
-      accumulated="$("$f" "${args_array[@]}" "$line" "$accumulated")"
-    fi
+    accumulated="$("$f" "${args_array[@]}" "$line" "$accumulated")"
   done
 
   echo "$accumulated"

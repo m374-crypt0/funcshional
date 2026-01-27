@@ -37,14 +37,18 @@ teardown() {
 def' \| \
     fold_first as_string ''
 
-  assert_output 'abc def'
+  # NOTE: There an empty element in the middle, hence two spaces between abc
+  # and def
+  assert_output 'abc  def'
 }
 
 @test 'fold_first succeeds with accumulator functions with arguments' {
+  # NOTE: there are both an empty input and a two white space input
   run bats_pipe echo 'abc
 
+  
 def' \| \
     fold_first as_decorated_string_first '' '<< ' ' >>'
 
-  assert_output '<< abc >> << def >>'
+  assert_output '<< abc >> <<  >> <<    >> << def >>'
 }

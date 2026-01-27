@@ -11,7 +11,9 @@ teardown() {
 }
 
 @test 'transform_first output nothing for empty input' {
-  run bats_pipe echo \| \
+  # NOTE: printf does not issue an end of line, that is the natural delimiter
+  # of stream
+  run bats_pipe printf '' \| \
     transform_first to_foo
 
   assert_output ''
@@ -66,12 +68,15 @@ defxyz  qwe
 ghixyz  qwe'
 }
 
-@test 'transform_first takes white spaces line only into account' {
+@test 'transform_first takes also white spaces line only into account' {
+  # NOTE: first line is composed of 2 white spaces, second one, only end of
+  # line
   run bats_pipe echo '
   
 bar' \| \
     transform_first to_foo
 
   assert_output 'foo
+foo
 foo'
 }

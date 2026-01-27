@@ -53,3 +53,16 @@ append() {
 
   echo "$@"
 }
+
+any() {
+  local ret &&
+    ret=$FUNCSHIONAL_ANY_ON_EMPTY_LIST
+
+  local line &&
+    while read -r line; do
+      ret=0
+      echo "$line"
+    done
+
+  return $ret
+}

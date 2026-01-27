@@ -133,3 +133,20 @@ c' \| \
 
   assert_output $'b\nc\n\n'
 }
+
+@test 'any returns error code if stream is empty' {
+  run bats_pipe printf '' \| \
+    any
+
+  assert_equal $status "$FUNCSHIONAL_ANY_ON_EMPTY_LIST"
+}
+
+@test 'any returns 0 if stream is not empty' {
+  run bats_pipe echo 'abc
+def' \| \
+    any
+
+  assert_equal $status 0
+  assert_output 'abc
+def'
+}

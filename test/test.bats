@@ -9,3 +9,7 @@ setup_file(){
 teardown_file(){
   :
 }
+
+@test '' {
+  :
+}

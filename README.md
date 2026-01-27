@@ -17,6 +17,83 @@ A bash library that empowers `bash` with functional programming constructs.
 
 ## features
 
+### piping functions
+
+Done thanks to `transform_first` and `transform_last` higher order functions.
+The only thing you have to keep in mind is that the function you want to be
+piped must output on `stdout`, just like any command you can pipe.
+
+#### Examples
+
+##### Transformers, enter in the pipe world
+
+```bash
+hello() {
+  echo hello
+}
+
+world() {
+  echo world
+}
+
+hello |
+push_back ' ' |
+push_back world |
+push_back '!' |
+fold concat
+
+# it will output the preferred sentence of programmers: hello world!
+
+```
+
+Though this academic example does not shine through its utility, it easily
+demonstrates you can chain even simplest functions using the `|` operator as it
+your functions were commands.
+
+This is a new tooling you have at hand, your functions can now take inputs as
+usual with arguments (`$1`, `$2`, ...) and return computed values by `echo`ing
+stuff on the `stdout` when chained with `|` and a `transform`er.
+
+##### Monadic operations, gracefully chain, fail fast and consistently
+
+Monadic operations are at hands with simple but powerful construct:
+
+```bash
+monopole_mine() {
+  m_start mine_raw_ore |
+    m_then filter only_gold |
+    m_then any |
+    m_catch report_and_stop 'no gold ore!' |
+    m_then transform melt_gold_ore |
+    m_then fold make_gold_ingots |
+    m_then any |
+    m_catch report_and_stop 'not enough molten gold for an ingot' |
+    m_end sell_gold_ingots
+}
+```
+
+The `monopole_mine` function is rather clear using these constructs. You mine
+ore and eventually, you could sell gold ingots, quite cool right?
+
+Few things:
+
+- start monadic operation block with `m_start` (monad start) and an operation
+  that is able to output things
+- chain operation on success with `m_then` (monad then) and the next operation
+  taking the previous operation result as input
+- handle any fail with `m_catch` (monad catch). It allows you to customize the
+  behavior in case of failure, even discard any error should you need to do
+  that.
+- finish the monadic operation block with `m_end` (monad end) the last
+  operation (here `sell_gold_ingots`)
+
+You now have the power to write self explanatory code easy to read and
+understand.
+
+## reference
+
+==TODO==
+
 ## contributing
 
 - sure you can, fork the repo, create a branch, make a PR, you know the drill!

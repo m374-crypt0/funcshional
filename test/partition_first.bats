@@ -71,3 +71,18 @@ a
 
   assert_output $'3\nb\nc\na\n1\n3\n2\n'
 }
+
+@test 'partition_first succeeds in partitioning using a predicate using arguments' {
+  run --keep-empty-lines bats_pipe echo '1
+b
+
+3
+
+c
+a
+
+2' \| \
+    partition_first only a b c
+
+  assert_output $'3\nb\nc\na\n1\n3\n2\n'
+}

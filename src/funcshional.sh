@@ -8,6 +8,13 @@ transform_first() {
   if [ -z "$f" ]; then
     return 1
   fi
+
+  local line
+  while read -r line; do
+    if [ -n "$line" ]; then
+      echo foo
+    fi
+  done
 }
 
 transform_last() {
@@ -16,4 +23,11 @@ transform_last() {
   if [ -z "$f" ]; then
     return 1
   fi
+
+  local line
+  while read -r line; do
+    if [ -n "$line" ]; then
+      echo foo
+    fi
+  done
 }

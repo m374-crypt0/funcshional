@@ -45,3 +45,14 @@ ghi' \| \
 
   assert_equal $status 1
 }
+
+@test 'transform_first succeeds at using a transformer whose first arg is stream item' {
+  run bats_pipe echo 'abc
+def
+ghi' \| \
+    transform_first t_first_append xyz
+
+  assert_output 'abcxyz
+defxyz
+ghixyz'
+}

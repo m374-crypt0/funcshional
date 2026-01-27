@@ -45,3 +45,14 @@ ghi' \| \
 
   assert_equal $status 1
 }
+
+@test 'transform_last succeeds at using a transformer whose last arg is stream item' {
+  run bats_pipe echo 'abc
+def
+ghi' \| \
+    transform_last t_last_append xyz
+
+  assert_output 'abcxyz
+defxyz
+ghixyz'
+}

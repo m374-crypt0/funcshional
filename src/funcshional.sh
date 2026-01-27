@@ -162,3 +162,9 @@ prepend() {
 
   sink
 }
+
+append() {
+  sink
+
+  echo "$@"
+}

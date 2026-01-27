@@ -84,7 +84,7 @@ teardown() {
   assert_output $'3\n4\n5\n'
 }
 
-@test 'prepend succeeds at preprending anything at the top of the stream' {
+@test 'prepend succeeds at prepending anything at the top of the stream' {
   run bats_pipe echo 'b
 c' \| \
     prepend '0
@@ -98,12 +98,36 @@ b
 c'
 }
 
-@test 'prepend succeeds at preprending empty item at the top of the stream' {
+@test 'prepend succeeds at prepending empty item at the top of the stream' {
   run bats_pipe echo 'b
 c' \| \
-    prepend ''
+    prepend '
+'
 
   assert_output '
+
 b
 c'
+}
+
+@test 'append succeeds at appending anything at the top of the stream' {
+  run bats_pipe echo 'b
+c' \| \
+    append '0
+
+a'
+
+  assert_output 'b
+c
+0
+
+a'
+}
+
+@test 'append succeeds at appending empty item at the bottom of the stream' {
+  run --keep-empty-lines bats_pipe echo 'b
+c' \| \
+    append ''
+
+  assert_output $'b\nc\n\n'
 }

@@ -49,3 +49,11 @@ as_decorated_string_last() {
     echo "$4 $prefix$3$suffix"
   fi
 }
+
+failing_accumulator() {
+  return 1
+}
+
+failing_transformer() {
+  return 1
+}

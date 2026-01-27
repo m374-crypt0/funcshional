@@ -24,6 +24,13 @@ teardown() {
   assert_equal $status 1
 }
 
+@test 'fold_last fails if the accumulator function fails' {
+  run bats_pipe echo \| \
+    fold_last failing_accumulator ''
+
+  assert_equal $status 1
+}
+
 @test 'fold_last succeeds at output empty collection from empty string' {
   run bats_pipe echo \| \
     fold_last as_string ''

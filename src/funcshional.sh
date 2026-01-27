@@ -17,7 +17,8 @@ transform_first() {
 
   local line
   while IFS= read -r line; do
-    "$f" "$line" "${args_array[@]}"
+    "$f" "$line" "${args_array[@]}" ||
+      return 1
   done
 }
 
@@ -36,7 +37,8 @@ transform_last() {
 
   local line
   while IFS= read -r line; do
-    "$f" "${args_array[@]}" "$line"
+    "$f" "${args_array[@]}" "$line" ||
+      return 1
   done
 }
 
@@ -62,7 +64,8 @@ fold_first() {
 
   local line
   while IFS= read -r line; do
-    accumulated="$("$f" "$line" "$accumulated" "${args_array[@]}")"
+    accumulated="$("$f" "$line" "$accumulated" "${args_array[@]}")" ||
+      return 1
   done
 
   echo "$accumulated"
@@ -90,13 +93,13 @@ fold_last() {
 
   local line
   while IFS= read -r line; do
-    accumulated="$("$f" "${args_array[@]}" "$line" "$accumulated")"
+    accumulated="$("$f" "${args_array[@]}" "$line" "$accumulated")" ||
+      return 1
   done
 
   echo "$accumulated"
 }
 
-# TODO: refacto as fold
 take() {
   local n &&
     n="$1"

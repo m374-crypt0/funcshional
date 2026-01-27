@@ -26,6 +26,13 @@ teardown() {
   assert_equal $status 1
 }
 
+@test 'transform_last fails if transformer function fails' {
+  run bats_pipe echo abc \| \
+    transform_last failing_transformer
+
+  assert_equal $status 1
+}
+
 @test 'transform_last succeeds and output as much as foo there is textual entries for argumentless transformer' {
   run bats_pipe echo 'abc
 def

@@ -14,7 +14,6 @@ teardown() {
   :
 }
 
-# bats file_tags=bats:focus
 @test 'lift fails if no operation is passed as argument' {
   run lift
 

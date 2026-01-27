@@ -42,7 +42,10 @@ is_positive_integer_() {
     n="$1"
 
   # NOTE: if n is 0, (( n + 0 )) fails...no comments
-  if ! ((n + 1)); then
+  [ "$n" -eq 0 ] &&
+    return 0
+
+  if ! ((n + 0)); then
     return 1
   fi
 

@@ -193,3 +193,24 @@ filter_first() {
     fi
   done
 }
+
+filter_last() {
+  local f="$1"
+  local f_type &&
+    f_type="$(type -t "$f")"
+
+  if [ "$f_type" != 'function' ]; then
+    return 1
+  fi
+
+  shift
+  local args_array &&
+    args_array=("$@")
+
+  local line
+  while IFS= read -r line; do
+    if "$f" "${args_array[@]}" "$line"; then
+      echo "$line"
+    fi
+  done
+}

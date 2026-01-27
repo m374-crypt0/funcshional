@@ -90,3 +90,12 @@ only() {
     [ "$item" = "$3" ] ||
     [ "$item" = "$4" ]
 }
+
+only_last() {
+  local item &&
+    item="$4"
+
+  [ "$item" = "$1" ] ||
+    [ "$item" = "$2" ] ||
+    [ "$item" = "$3" ]
+}

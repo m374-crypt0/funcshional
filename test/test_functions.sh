@@ -67,3 +67,26 @@ wrong_outputing_transformer() {
   echo foo
   echo bar
 }
+
+non_empty() {
+  local item &&
+    item="$1"
+
+  [ -n "$item" ]
+}
+
+only_empty() {
+  local item &&
+    item="$1"
+
+  [ -z "$item" ]
+}
+
+only() {
+  local item &&
+    item="$1"
+
+  [ "$item" = "$2" ] ||
+    [ "$item" = "$3" ] ||
+    [ "$item" = "$4" ]
+}

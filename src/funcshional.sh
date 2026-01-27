@@ -172,3 +172,24 @@ append() {
 
   echo "$@"
 }
+
+filter_first() {
+  local f="$1"
+  local f_type &&
+    f_type="$(type -t "$f")"
+
+  if [ "$f_type" != 'function' ]; then
+    return 1
+  fi
+
+  shift
+  local args_array &&
+    args_array=("$@")
+
+  local line
+  while IFS= read -r line; do
+    if "$f" "$line" "${args_array[@]}"; then
+      echo "$line"
+    fi
+  done
+}

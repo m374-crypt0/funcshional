@@ -44,7 +44,7 @@ def' \| \
   run bats_pipe echo 'abc
 
 def' \| \
-    fold_first as_decorated_string '' '<< ' ' >>'
+    fold_first as_decorated_string_first '' '<< ' ' >>'
 
   assert_output '<< abc >> << def >>'
 }

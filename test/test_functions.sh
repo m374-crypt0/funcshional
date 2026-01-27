@@ -22,7 +22,7 @@ as_string() {
   fi
 }
 
-as_decorated_string() {
+as_decorated_string_first() {
   local prefix &&
     prefix="$3"
 
@@ -33,5 +33,19 @@ as_decorated_string() {
     echo "$prefix$1$suffix"
   else
     echo "$2 $prefix$1$suffix"
+  fi
+}
+
+as_decorated_string_last() {
+  local prefix &&
+    prefix="$1"
+
+  local suffix &&
+    suffix="$2"
+
+  if [ -z "$4" ]; then
+    echo "$prefix$3$suffix"
+  else
+    echo "$4 $prefix$3$suffix"
   fi
 }

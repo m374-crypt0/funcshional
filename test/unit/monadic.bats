@@ -21,38 +21,10 @@ teardown() {
   assert_equal $status "$FUNCSHIONAL_MONAD_LIFT_MISSING_OPERATION"
 }
 
-@test 'lift accepts command as argument executes it and lifts its output' {
-  run bats_pipe lift echo hello \| \
-    unlift
+@test 'unlift cannot be called before a lift' {
+  run unlift
 
-  assert_equal $status 0
-  assert_output hello
-}
-
-@test 'lift accepts function call as argument executes it and lifts its output' {
-  run bats_pipe lift echo_args hello world \| \
-    unlift
-
-  assert_output 'hello world'
-}
-
-@test 'lift succeeds command execution for and_then further processing' {
-  run bats_pipe lift report_success \| \
-    and_then echo that is good \| \
-    unlift
-
-  assert_equal $status 0
-  assert_output 'succeeded
-that is good'
-}
-
-@test 'lift succeeds command execution, or_else calls are ignored' {
-  run bats_pipe lift report_success \| \
-    or_else echo that is wrong \| \
-    unlift
-
-  assert_equal $status 0
-  assert_output succeeded
+  assert_equal $status "$FUNCSHIONAL_MONAD_INVALID_UNLIFT_CALL"
 }
 
 @test 'and_then cannot be called before a lift' {
@@ -81,8 +53,40 @@ that is good'
   assert_equal $status "$FUNCSHIONAL_MONAD_OR_ELSE_MISSING_OPERATION"
 }
 
-@test 'unlift cannot be called before a lift' {
-  run unlift
+@test 'lift accepts command as argument executes it and lifts its output' {
+  run bats_pipe lift echo hello \| \
+    unlift
 
-  assert_equal $status "$FUNCSHIONAL_MONAD_INVALID_UNLIFT_CALL"
+  assert_equal $status 0
+  assert_output hello
+}
+
+@test 'lift accepts function call as argument executes it and lifts its output' {
+  run bats_pipe lift echo_args hello world \| \
+    unlift
+
+  assert_output 'hello world'
+}
+
+@test 'lift succeeds command execution for and_then further processing' {
+  run bats_pipe lift report_success \| \
+    and_then echo that is good \| \
+    and_then echo that is so cool \| \
+    unlift
+
+  assert_equal $status 0
+  assert_output 'succeeded
+that is good
+that is so cool'
+}
+
+@test 'lift successful command execution, ignore or_else calls' {
+  run bats_pipe lift report_success \| \
+    or_else echo that is wrong \| \
+    and_then echo_args or_else ignored \| \
+    unlift
+
+  assert_equal $status 0
+  assert_output 'succeeded
+or_else ignored'
 }

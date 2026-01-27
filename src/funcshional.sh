@@ -45,5 +45,27 @@ transform_last() {
 }
 
 fold_first() {
-  return 1
+  local f="$1"
+  local f_type &&
+    f_type="$(type -t "$f")"
+
+  if [ "$f_type" != 'function' ]; then
+    return 1
+  fi
+
+  if [ $# -lt 2 ]; then
+    return 1
+  fi
+
+  local accumulated &&
+    accumulated="$2"
+
+  local line
+  while IFS= read -r line; do
+    if [ -n "$line" ]; then
+      accumulated="$("$f" "$line" "$accumulated")"
+    fi
+  done
+
+  echo "$accumulated"
 }

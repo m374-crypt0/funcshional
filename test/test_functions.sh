@@ -13,3 +13,11 @@ t_last_append() {
 
   echo "$item""$1""$2""$3"
 }
+
+as_string() {
+  if [ -z "$2" ]; then
+    echo "$1"
+  else
+    echo "$2 $1"
+  fi
+}

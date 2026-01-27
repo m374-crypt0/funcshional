@@ -3,6 +3,7 @@ setup_file() {
 }
 
 setup() {
+  # shellcheck disable=SC2153
   load "${FUNCSHIONAL_ROOT_DIR}test/test_helper/bats-support/load"
   load "${FUNCSHIONAL_ROOT_DIR}test/test_helper/bats-assert/load"
 }
@@ -11,7 +12,6 @@ teardown() {
   :
 }
 
-# bats file_tags=bats:focus
 @test 'funcshional cannot be used from anywhere in the file system if FUNCSHIONAL_ROOT_DIR is undefined' {
   local funcshional_root_dir &&
     funcshional_root_dir=$FUNCSHIONAL_ROOT_DIR

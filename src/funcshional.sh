@@ -4,8 +4,10 @@ set -o pipefail
 
 transform_first() {
   local f="$1"
+  local f_type &&
+    f_type="$(type -t "$f")"
 
-  if [ -z "$f" ]; then
+  if [ "$f_type" != 'function' ]; then
     return 1
   fi
 
@@ -19,8 +21,10 @@ transform_first() {
 
 transform_last() {
   local f="$1"
+  local f_type &&
+    f_type="$(type -t "$f")"
 
-  if [ -z "$f" ]; then
+  if [ "$f_type" != 'function' ]; then
     return 1
   fi
 

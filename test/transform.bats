@@ -37,6 +37,15 @@ foo
 foo'
 }
 
+@test 'transform_first fails if first argument is not a function' {
+  run bats_pipe echo 'abc
+def
+ghi' \| \
+    transform_first inexisting_function
+
+  assert_equal $status 1
+}
+
 @test 'transform_last output nothing for empty input' {
   run bats_pipe echo \| \
     transform_last to_foo
@@ -60,4 +69,13 @@ ghi' \| \
   assert_output 'foo
 foo
 foo'
+}
+
+@test 'transform_last fails if first argument is not a function' {
+  run bats_pipe echo 'abc
+def
+ghi' \| \
+    transform_last inexisting_function
+
+  assert_equal $status 1
 }

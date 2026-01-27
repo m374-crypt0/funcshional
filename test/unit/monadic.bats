@@ -77,6 +77,17 @@ world'
 !'
 }
 
+@test 'failed command in and_then propagates error in unlift' {
+  run bats_pipe lift report_success \| \
+    and_then report_failure \| \
+    unlift echo propagated error
+
+  assert_not_equal $status 0
+  assert_output 'succeeded
+failed
+propagated error'
+}
+
 @test 'lift succeeds command execution for and_then further processing' {
   run bats_pipe lift report_success \| \
     and_then echo that is good \| \

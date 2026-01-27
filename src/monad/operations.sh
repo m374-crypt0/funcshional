@@ -9,9 +9,8 @@ set -o pipefail
 . "${FUNCSHIONAL_ROOT_DIR}"src/error_codes.sh
 
 lift() {
-  if [ $# -eq 0 ]; then
+  [ $# -eq 0 ] &&
     return $FUNCSHIONAL_MONAD_LIFT_MISSING_OPERATION
-  fi
 
   local output &&
     local ret &&
@@ -25,9 +24,8 @@ lift() {
 }
 
 unlift() {
-  if [ $# -eq 0 ]; then
+  [ $# -eq 0 ] &&
     return $FUNCSHIONAL_MONAD_UNLIFT_MISSING_OPERATION
-  fi
 
   local monad_ret_decl &&
     read -t 0.1 -r monad_ret_decl ||
@@ -49,9 +47,8 @@ and_then() {
     read -t 0.1 -r monad_ret_decl ||
     return $FUNCSHIONAL_MONAD_INVALID_AND_THEN_CALL
 
-  if [ $# -eq 0 ]; then
+  [ $# -eq 0 ] &&
     return $FUNCSHIONAL_MONAD_AND_THEN_MISSING_OPERATION
-  fi
 
   # NOTE: monad_ret variable is evaluated here, unlifting process
   eval "$monad_ret_decl"
@@ -74,6 +71,8 @@ and_then() {
   sink
 
   echo "$output"
+
+  return $ret
 }
 
 or_else() {
@@ -81,9 +80,8 @@ or_else() {
     read -t 0.1 -r monad_ret_decl ||
     return $FUNCSHIONAL_MONAD_INVALID_OR_ELSE_CALL
 
-  if [ $# -eq 0 ]; then
+  [ $# -eq 0 ] &&
     return $FUNCSHIONAL_MONAD_OR_ELSE_MISSING_OPERATION
-  fi
 
   # NOTE: monad_ret variable is evaluated here, unlifting process
   eval "$monad_ret_decl"

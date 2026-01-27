@@ -4,14 +4,12 @@ to_foo() {
 
 t_first_append() {
   local item="$1"
-  local arg="$2"
 
-  echo "$item""$arg"
+  echo "$item""$2""$3"
 }
 
 t_last_append() {
-  local arg="$1"
-  local item="$2"
+  local item="$3"
 
-  echo "$item""$arg"
+  echo "$item""$1""$2"
 }

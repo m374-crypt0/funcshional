@@ -50,9 +50,9 @@ ghi' \| \
   run bats_pipe echo 'abc
 def
 ghi' \| \
-    transform_first t_first_append xyz
+    transform_first t_first_append xyz qwe
 
-  assert_output 'abcxyz
-defxyz
-ghixyz'
+  assert_output 'abcxyzqwe
+defxyzqwe
+ghixyzqwe'
 }

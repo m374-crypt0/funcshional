@@ -11,13 +11,14 @@ transform_first() {
     return 1
   fi
 
-  local arg &&
-    arg="$2"
+  shift
+  local args_array &&
+    read -ra args_array <<<"$@"
 
   local line
   while read -r line; do
     if [ -n "$line" ]; then
-      "$f" "$line" "$arg"
+      "$f" "$line" "${args_array[@]}"
     fi
   done
 }
@@ -31,13 +32,14 @@ transform_last() {
     return 1
   fi
 
-  local arg &&
-    arg="$2"
+  shift
+  local args_array &&
+    read -ra args_array <<<"$@"
 
   local line
   while read -r line; do
     if [ -n "$line" ]; then
-      "$f" "$arg" "$line"
+      "$f" "${args_array[@]}" "$line"
     fi
   done
 }

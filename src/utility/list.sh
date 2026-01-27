@@ -60,8 +60,10 @@ any() {
 
   local line &&
     while read -r line; do
-      ret=0
-      echo "$line"
+      if [ -n "$line" ]; then
+        ret=0
+        echo "$line"
+      fi
     done
 
   return $ret

@@ -143,10 +143,21 @@ c' \| \
 
 @test 'any returns 0 if stream is not empty' {
   run bats_pipe echo 'abc
+
 def' \| \
     any
 
   assert_equal $status 0
   assert_output 'abc
 def'
+}
+
+@test 'any errors for a stream that contains only empty entries' {
+  run bats_pipe echo '
+
+' \| \
+    any
+
+  assert_equal $status "$FUNCSHIONAL_ANY_ON_EMPTY_LIST"
+  assert_output ''
 }

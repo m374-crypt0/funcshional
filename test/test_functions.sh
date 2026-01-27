@@ -85,3 +85,7 @@ only_last() {
 only_letter() {
   [[ "$1" =~ [a-zA-Z] ]]
 }
+
+echo_args() {
+  echo "$*"
+}

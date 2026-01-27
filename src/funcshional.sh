@@ -137,6 +137,10 @@ sink() {
   transform_first id
 }
 
+discard() {
+  read -r
+}
+
 skip() {
   local n &&
     n="$1"
@@ -150,7 +154,7 @@ skip() {
   fi
 
   while [ "$n" -gt 0 ]; do
-    read -r
+    discard
     n=$((n - 1))
   done
 

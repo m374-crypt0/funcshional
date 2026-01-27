@@ -19,7 +19,7 @@ teardown() {
 2
 3' \| take
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_MISSING_LIST_INDEX"
 }
 
 @test 'take fails without a number as argument' {
@@ -27,7 +27,7 @@ teardown() {
 2
 3' \| take foo
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_LIST_INDEX"
 }
 
 @test 'take fails with a negative number as argument' {
@@ -35,7 +35,7 @@ teardown() {
 2
 3' \| take -1
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_LIST_INDEX"
 }
 
 @test 'take succeeds at returning first elements of a stream' {
@@ -54,7 +54,7 @@ teardown() {
 2
 3' \| skip
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_MISSING_LIST_INDEX"
 }
 
 @test 'skip fails without a number as argument' {
@@ -62,7 +62,7 @@ teardown() {
 2
 3' \| skip foo
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_LIST_INDEX"
 }
 
 @test 'skip fails with a negative number as argument' {
@@ -70,7 +70,7 @@ teardown() {
 2
 3' \| skip -1
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_LIST_INDEX"
 }
 
 @test 'skip succeeds at returning last elements of a stream' {

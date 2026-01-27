@@ -54,6 +54,10 @@ no_op_success() {
   :
 }
 
+no_op_fail() {
+  return 1
+}
+
 wrong_outputing_transformer() {
   # NOTE: wrong because outputing 2 lines for 1 input stream item
   echo foo

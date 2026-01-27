@@ -27,14 +27,14 @@ teardown() {
   run bats_pipe echo abc \| \
     transform_first
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_TRANSFORM_FUNCTION"
 }
 
 @test 'transform_first fails if transformer function fails' {
   run bats_pipe echo abc \| \
-    transform_first failing_transformer
+    transform_first no_op_fail
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_TRANSFORM_FUNCTION_CALL_FAILED"
 }
 
 @test 'transform_first succeeds and output as much as foo there is textual entries for argumentless transformer' {
@@ -54,7 +54,7 @@ def
 ghi' \| \
     transform_first inexisting_function
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_TRANSFORM_FUNCTION"
 }
 
 @test 'transform_first succeeds at using a transformer whose first arg is stream item' {
@@ -100,11 +100,10 @@ def' \| \
   assert_output $'\n\n'
 }
 
-# TODO: more explicit error codes
 @test 'transform_first cannot change the size of input stream by outputing more than one line' {
   run bats_pipe echo 'abc
 def' \| \
     transform_first wrong_outputing_transformer
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_TRANSFORM_FUNCTION_OUTPUT"
 }

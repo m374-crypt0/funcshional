@@ -6,9 +6,12 @@ set -o pipefail
 . "${FUNCSHIONAL_ROOT_DIR}"src/hof/transform.sh
 
 take() {
+  [ -z "$1" ] &&
+    return $FUNCSHIONAL_MISSING_LIST_INDEX
+
   local n &&
     is_positive_integer_ "$1" ||
-    return 1 &&
+    return $FUNCSHIONAL_INVALID_LIST_INDEX &&
     n="$1"
 
   local line
@@ -23,9 +26,12 @@ take() {
 }
 
 skip() {
+  [ -z "$1" ] &&
+    return $FUNCSHIONAL_MISSING_LIST_INDEX
+
   local n &&
     is_positive_integer_ "$1" ||
-    return 1 &&
+    return $FUNCSHIONAL_INVALID_LIST_INDEX &&
     n="$1"
 
   while [ "$n" -gt 0 ]; do

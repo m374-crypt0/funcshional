@@ -18,7 +18,7 @@ teardown() {
   run bats_pipe echo a \| \
     partition_last unexisting_function
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_PARTITION_PREDICATE"
 }
 
 @test 'partition_last returns nothing if input stream contains only empty elements' {

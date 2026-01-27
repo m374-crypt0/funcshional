@@ -5,10 +5,13 @@ set -o pipefail
 # shellcheck source=../internals_.sh
 . "${FUNCSHIONAL_ROOT_DIR}"src/internals_.sh
 
+# shellcheck source=../error_codes.sh
+. "${FUNCSHIONAL_ROOT_DIR}"src/error_codes.sh
+
 partition_first() {
   local f &&
     is_function_ "$1" ||
-    return $? &&
+    return $FUNCSHIONAL_INVALID_PARTITION_PREDICATE &&
     f="$1"
 
   shift
@@ -45,7 +48,7 @@ partition_first() {
 partition_last() {
   local f &&
     is_function_ "$1" ||
-    return $? &&
+    return $FUNCSHIONAL_INVALID_PARTITION_PREDICATE &&
     f="$1"
 
   shift

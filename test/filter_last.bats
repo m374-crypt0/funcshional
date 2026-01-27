@@ -21,7 +21,7 @@ b
 c' \| \
     filter_last foo
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_FILTER_PREDICATE"
 }
 
 @test 'filter_last works for argument-less predicate filtering non empty input' {

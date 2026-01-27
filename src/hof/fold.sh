@@ -5,14 +5,17 @@ set -o pipefail
 # shellcheck source=../internals_.sh
 . "${FUNCSHIONAL_ROOT_DIR}"src/internals_.sh
 
+# shellcheck source=../error_codes.sh
+. "${FUNCSHIONAL_ROOT_DIR}"src/error_codes.sh
+
 fold_first() {
   local f &&
     is_function_ "$1" ||
-    return $? &&
+    return $FUNCSHIONAL_INVALID_FOLD_REDUCER &&
     f="$1"
 
   if [ $# -lt 2 ]; then
-    return 1
+    return $FUNCSHIONAL_MISSING_FOLD_ACCUMULATOR
   fi
 
   local accumulated &&
@@ -26,7 +29,7 @@ fold_first() {
   while IFS= read -r line; do
     if [ -n "$line" ]; then
       accumulated="$("$f" "$line" "$accumulated" "${args_array[@]}")" ||
-        return 1
+        return $FUNCSHIONAL_FOLD_REDUCER_INVOCATION_ERROR
     fi
   done
 
@@ -36,11 +39,11 @@ fold_first() {
 fold_last() {
   local f &&
     is_function_ "$1" ||
-    return $? &&
+    return $FUNCSHIONAL_INVALID_FOLD_REDUCER &&
     f="$1"
 
   if [ $# -lt 2 ]; then
-    return 1
+    return $FUNCSHIONAL_MISSING_FOLD_ACCUMULATOR
   fi
 
   local accumulated &&
@@ -54,7 +57,7 @@ fold_last() {
   while IFS= read -r line; do
     if [ -n "$line" ]; then
       accumulated="$("$f" "${args_array[@]}" "$line" "$accumulated")" ||
-        return 1
+        return $FUNCSHIONAL_FOLD_REDUCER_INVOCATION_ERROR
     fi
   done
 

@@ -18,21 +18,21 @@ teardown() {
   run bats_pipe echo \| \
     fold_last unexisting_function
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_FOLD_REDUCER"
 }
 
 @test 'fold_last fails if not passed an initial accumulator value' {
   run bats_pipe echo \| \
     fold_last as_string
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_MISSING_FOLD_ACCUMULATOR"
 }
 
 @test 'fold_last fails if the accumulator function fails' {
   run bats_pipe echo a \| \
-    fold_last failing_accumulator ''
+    fold_last no_op_fail ''
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_FOLD_REDUCER_INVOCATION_ERROR"
 }
 
 @test 'fold_last succeeds at output empty collection from empty string' {

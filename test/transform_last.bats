@@ -27,14 +27,14 @@ teardown() {
   run bats_pipe echo abc \| \
     transform_last
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_TRANSFORM_FUNCTION"
 }
 
 @test 'transform_last fails if transformer function fails' {
   run bats_pipe echo abc \| \
-    transform_last failing_transformer
+    transform_last no_op_fail
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_TRANSFORM_FUNCTION_CALL_FAILED"
 }
 
 @test 'transform_last succeeds and output as much as foo there is textual entries for argumentless transformer' {
@@ -54,7 +54,7 @@ def
 ghi' \| \
     transform_last inexisting_function
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_TRANSFORM_FUNCTION"
 }
 
 @test 'transform_last succeeds at using a transformer whose last arg is stream item' {
@@ -105,5 +105,5 @@ def' \| \
 def' \| \
     transform_last wrong_outputing_transformer
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_TRANSFORM_FUNCTION_OUTPUT"
 }

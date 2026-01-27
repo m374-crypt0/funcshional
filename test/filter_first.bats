@@ -21,7 +21,7 @@ b
 c' \| \
     filter_first foo
 
-  assert_equal $status 1
+  assert_equal $status "$FUNCSHIONAL_INVALID_FILTER_PREDICATE"
 }
 
 @test 'filter_first works for argument-less predicate for empty stream' {

@@ -6,7 +6,7 @@ A bash library that empowers `bash` with functional programming constructs.
 
 - best way to use is to integrate this library as a git submodule to your bash
   project:
-  - `git submodule add https://github.com/MetaBarj0/funcshional.git [dir]/funcshional`
+  - `git submodule add https://github.com/m374-crypt0/funcshional.git [dir]/funcshional`
     where \[dir] is a directory within your repository
   - define and expose globally the `FUNCSHIONAL_ROOT_DIR` variable to the
     `[dir]/funcshional` value to allow you to use (include) the `funcshional`
